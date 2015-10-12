@@ -4,15 +4,17 @@ namespace MitchellClaimDomain.Classes.Enumerations
 {
     public enum CauseOfLossCode
     {
+        [StringValue("Collision")]
+        Collision = 1,
         [StringValue("Explosion")]
-        Explosion = 1,
+        Explosion = 2,
         [StringValue("Fire")]
-        Fire = 2,
+        Fire = 3,
         [StringValue("Hail")]
-        Hail = 3,
+        Hail = 4,
         [StringValue("Mechanical Breakdown")]
-        MechanicalBreakdown = 4,
+        MechanicalBreakdown = 5,
         [StringValue("Other")]
-        Other = 5
+        Other = 6
     }
 }

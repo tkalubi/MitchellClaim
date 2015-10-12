@@ -36,7 +36,18 @@ namespace MitchellClaimDomain.DataModel
             .WithRequired(c => c.Claim).Map(p => p.MapKey("ClaimId"))
             .WillCascadeOnDelete();
 
-          
+
+            modelBuilder
+                .Entity<VehicleInfoType>()
+                .Property(t => t.Mileage)
+                .IsOptional();
+
+            modelBuilder
+               .Entity<VehicleInfoType>()
+               .Property(t => t.LicPlateExpDate)
+               .IsOptional();
+
+
             base.OnModelCreating(modelBuilder);
         }
 

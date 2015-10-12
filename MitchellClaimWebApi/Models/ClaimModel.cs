@@ -1,20 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace MitchellClaimWebApi.Models
 {
-    public class ClaimModel
-    {
-        public string Url { get; set; }
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.mitchell.com/examples/claim")]
+    [System.Xml.Serialization.XmlRootAttribute("MitchellClaim", Namespace = "http://www.mitchell.com/examples/claim", IsNullable = false)]
+    [DataContract]
+    public class MitchellClaim
+    {       
+         [DataMember]
         public string ClaimNumber { get; set; }
-        public string ClaimFirstName { get; set; }
-        public string ClaimLastName { get; set; }
+         [DataMember]
+        public string ClaimantFirstName { get; set; }
+         [DataMember]
+         public string ClaimantLastName { get; set; }
+         [DataMember]
         public string Status { get; set; }
+         [DataMember]
         public DateTime LossDate { get; set; }
+         [DataMember]
         public LossInfoModel LossInfo { get; set; }
+         [DataMember]
         public long AssignedAdjusterID { get; set; }
-        public IEnumerable<VehicleModel> Vehicles { get; set; }
+         [XmlArray("Vehicles")]
+         [XmlArrayItem("VehicleDetails")]
+         [DataMember]
+        public VehicleModel[] Vehicles { get; set; }
     }
 }

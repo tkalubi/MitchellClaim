@@ -59,6 +59,10 @@
     <Compile Include="Migrations\201510091838295_OneToOneClaimToLossInfoCascadeDelete.Designer.cs">
       <DependentUpon>201510091838295_OneToOneClaimToLossInfoCascadeDelete.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201510120551398_modelYearRequired.cs" />
+    <Compile Include="Migrations\201510120551398_modelYearRequired.Designer.cs">
+      <DependentUpon>201510120551398_modelYearRequired.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MitchellClaimContext.cs" />
     <Compile Include="MitchellClaimRepository.cs" />
@@ -84,6 +88,15 @@
     <EmbeddedResource Include="Migrations\201510091838295_OneToOneClaimToLossInfoCascadeDelete.resx">
       <DependentUpon>201510091838295_OneToOneClaimToLossInfoCascadeDelete.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510120551398_modelYearRequired.resx">
+      <DependentUpon>201510120551398_modelYearRequired.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="create-claim.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="update-claim.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

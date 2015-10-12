@@ -1,4 +1,5 @@
 ﻿using MitchellClaimDomain.Classes.Entities;
+using MitchellClaimDomain.Classes.Enumerations;
 using MitchellClaimDomain.DataModel;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace MitchellClaimWebApi.Models
             _repo = repo;
         }
 
+        #region LossInfoModel Factory
+
         public LossInfoModel Create(LossInfoType lossInfo)
         {
             if (lossInfo == null) return null;
@@ -30,6 +33,21 @@ namespace MitchellClaimWebApi.Models
                 ReportedDate = lossInfo.ReportedDate,
             };
         }
+
+        public LossInfoType Parse(LossInfoModel lossInfoModel)
+        {
+            if (lossInfoModel == null) return null;
+            return new LossInfoType()
+            {
+                CauseOfLoss = (CauseOfLossCode)Enum.Parse(typeof(CauseOfLossCode), lossInfoModel.CauseOfLoss),
+                LossDescription = lossInfoModel.LossDescription,
+                ReportedDate = lossInfoModel.ReportedDate
+            };
+        }
+
+        #endregion
+
+        #region VehicleModel Factory
 
         public VehicleModel Create(VehicleInfoType vehicleInfo)
         {
@@ -51,21 +69,96 @@ namespace MitchellClaimWebApi.Models
             };
         }
 
-        public ClaimModel Create(MitchellClaimType mitchellClaimType)
+        public VehicleInfoType Parse(VehicleModel vehicleModel)
+        {
+            if (vehicleModel == null) return null;
+            return new VehicleInfoType()
+            {
+                DamageDescription = vehicleModel.DamageDescription,
+                EngineDescription = vehicleModel.EngineDescription,
+                ExteriorColor = vehicleModel.ExteriorColor,
+                LicPlate = vehicleModel.LicPlate,
+                LicPlateExpDate = vehicleModel.LicPlateExpDate,
+                MakeDescription = vehicleModel.MakeDescription,
+                ModelDescription = vehicleModel.ModelDescription,
+                ModelYear = vehicleModel.ModelYear,
+                Vin = vehicleModel.Vin
+            };
+
+        }
+
+        public List<VehicleInfoType> Parse(IEnumerable<VehicleModel> vehicles)
+        {
+            if (vehicles == null) return null;
+            var res = new List<VehicleInfoType>();
+            foreach (var item in vehicles)
+            {
+                res.Add(Parse(item));
+            }
+            return res;
+        }
+
+        #endregion
+
+        #region ClaimModel Factory
+
+        public MitchellClaim Create(MitchellClaimType mitchellClaimType)
         {
             if (mitchellClaimType == null) return null;
 
-            return new ClaimModel()
+            return new MitchellClaim()
             {
                 AssignedAdjusterID = mitchellClaimType.AssignedAdjusterID,
-                ClaimFirstName = mitchellClaimType.ClaimantFirstName,
-                ClaimLastName = mitchellClaimType.ClaimantLastName,
+                ClaimantFirstName = mitchellClaimType.ClaimantFirstName,
+                ClaimantLastName = mitchellClaimType.ClaimantLastName,
                 ClaimNumber = mitchellClaimType.ClaimNumber,
                 LossDate = mitchellClaimType.LossDate,
                 LossInfo = Create(mitchellClaimType.LossInfo),
                 Status = mitchellClaimType.Status.ToString(),
-                Vehicles = mitchellClaimType.Vehicles.Select(m => Create(m))
+                Vehicles = mitchellClaimType.Vehicles.Select(m => Create(m)).ToArray()
             };
         }
+
+        public IEnumerable<MitchellClaim> Create(IEnumerable<MitchellClaimType> mitchellClaimTypes)
+        {
+            if (mitchellClaimTypes == null) return null;
+
+            List<MitchellClaim> res = new List<MitchellClaim>();
+            if (mitchellClaimTypes == null) return null;
+            foreach (var item in mitchellClaimTypes)
+            {
+                res.Add(Create(item));
+            }
+
+            return res;
+        }
+
+        public MitchellClaimType Parse(MitchellClaim model)
+        {
+            try
+            {
+                if (model == null) return null;
+
+                var entity = new MitchellClaimType()
+                {
+                    AssignedAdjusterID = model.AssignedAdjusterID,
+                    ClaimantFirstName = model.ClaimantFirstName,
+                    ClaimantLastName = model.ClaimantLastName,
+                    ClaimNumber = model.ClaimNumber,
+                    LossDate = model.LossDate,
+                    LossInfo = Parse(model.LossInfo), 
+                    Vehicles = Parse(model.Vehicles),                   
+                    Status = (StatusCode)Enum.Parse(typeof(StatusCode), model.Status)
+                };                
+                return entity;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+       
+        #endregion
+
     }
 }

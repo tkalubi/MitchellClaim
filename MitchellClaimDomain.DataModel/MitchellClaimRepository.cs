@@ -34,7 +34,8 @@ namespace MitchellClaimDomain.DataModel
 
         }
 
-        public List<MitchellClaimType> GetMitchellClaimsByLossDate(DateTime date1, DateTime date2)
+      
+        public List<MitchellClaimType> GetMitchellClaimsByLossDateRange(DateTime date1, DateTime date2)
         {
 
             return _mitchellClaimContext.MitchellClaimTypes.Where(x => x.LossDate >= date1 && x.LossDate <= date2).ToList();
