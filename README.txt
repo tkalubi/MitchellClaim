@@ -6,6 +6,8 @@ Web API 2.2
 Entity Framework 6.1.3
 Data Store: LocalDB (SQL Server Data Tools)
 Ninject for Dependency Injection
-Testing Framework: MSTest
+Testing: 
+    - Framework: MSTest
+    - Autofixture for generating test data
 Client Test Application: Fiddler Web Debugger (v4.6.0.5)
 
